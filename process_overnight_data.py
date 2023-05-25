@@ -57,7 +57,7 @@ def remove_leading_zeros(filename):
 from pathlib import Path
 from tqdm import tqdm
 
-directory_path = Path("hypnogramFiles\donehypnogram")
+directory_path = Path("donehypnogram")
 
 # Iterate over each file in the directory
 for filename in tqdm(os.listdir(directory_path)):

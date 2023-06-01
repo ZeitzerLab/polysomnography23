@@ -11,21 +11,6 @@ def remove_leading_zeros(filename):
     for line in lines:
         digit = int(line.strip())
 
-        # if not leading_zeros_removed and digit == 1:
-        #     if consecutive_ones_count == 6:
-        #         leading_zeros_removed = True
-        #         # add 6 ones to the modified lines
-        #         modified_lines.extend(['1'] * 6)
-        #         continue
-        #     consecutive_ones_count += 1
-        # elif not leading_zeros_removed and (digit != 0 and digit != 1):
-        #     leading_zeros_removed = True
-        #     modified_lines.append(str(digit))
-        # elif not leading_zeros_removed and digit == 0:
-        #     continue
-        # else:
-        #     modified_lines.append(str(digit))
-
         if not leading_zeros_removed:
             if digit != 0 and digit != 1:
                 leading_zeros_removed = True

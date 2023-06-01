@@ -1,0 +1,6 @@
+ donehypnogram/shhs1-200230.hypnogram.txt
+ donehypnogram/shhs1-202180.hypnogram.txt
+ donehypnogram/shhs1-203065.hypnogram.txt
+ donehypnogram/shhs1-202310.hypnogram.txt
+
+These files had all 0s (all wake) to begin with so I dropped them.

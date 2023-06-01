@@ -27,27 +27,24 @@ def calculate_waso(threshold_minutes, filepath):
                 if wake_time_min > threshold_minutes:
                     waso += wake_time_min    
     return waso
-    
-
-
-    
-
 
 
 directory_path = Path("donehypnogram")
 
 # Iterate over each file in the directory
-
 # list with 2, 3, 5 min windows
-wasoresults = [[], [], [], []]
+wasoresults = []
+
+for threshold in thresholds:
+    wasoresults.append([])
+
 for filename in tqdm(os.listdir(directory_path)):
     if filename.endswith('.txt'):
         file_path = os.path.join(directory_path, filename)
         
-        wasoresults[0].append(calculate_waso(2, file_path))
-        wasoresults[1].append(calculate_waso(3, file_path))
-        wasoresults[2].append(calculate_waso(4, file_path))
-        wasoresults[3].append(calculate_waso(5, file_path))
+        for i, threshold in enumerate(thresholds):
+            waso = calculate_waso(threshold, file_path)
+            wasoresults[i].append(waso)
     
 
 # # plot the results
@@ -62,10 +59,9 @@ for filename in tqdm(os.listdir(directory_path)):
 # plt.show()
 
 # average waso for each threshold
-print("Average waso for 2 minutes: ", np.mean(wasoresults[0]))
-print("Average waso for 3 minutes: ", np.mean(wasoresults[1]))
-print("Average waso for 4 minutes: ", np.mean(wasoresults[2]))
-print("Average waso for 5 minutes: ", np.mean(wasoresults[3]))
+print("Average waso for each threshold")
+for i, threshold in enumerate(thresholds):
+    print(f"{threshold} minutes: {np.mean(wasoresults[i])}")
 
 
 

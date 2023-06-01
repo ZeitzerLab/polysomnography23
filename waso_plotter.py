@@ -1,9 +1,8 @@
 # given all the files, need to plot waso timings with three different thresholds
-thresholds = []
+thresholds = [2, 3, 4, 5] # minutes
 # each line in the data represents 15 seconds
 
 import os
-import matplotlib.pyplot as plt
 import numpy as np
 from pathlib import Path
 from tqdm import tqdm

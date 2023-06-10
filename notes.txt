@@ -4,3 +4,15 @@
  donehypnogram/shhs1-202310.hypnogram.txt
 
 These files had all 0s (all wake) to begin with so I dropped them.
+
+| fileids = [filename.split('.')[0].split('-')[1] for filename in files]
+| 
+| df = pd.read_csv(original_csv)
+| ids = [str(i) for i in df["nsrrid"].values]
+| 
+| # show items in ids not in files
+| for i in ids:
+|     if i not in fileids:
+|         print(i)
+
+This code showed that 204015 was not in the fileids. I am **removing** this from the original csv.

@@ -1,0 +1,29 @@
+      nsrrid      rdi4p  gender  race  MStat  ...    AUTO_SE  WASO_2min  WASO_3min  WASO_4min  WASO_5min
+0     200004   0.797342       1     1      1  ...  80.069686      38.50      27.25      23.75      23.75
+1     200005   2.756757       2     2      3  ...  68.357741     118.00     110.75     102.75      93.50
+2     200009  11.948791       1     1      1  ...  78.761062      37.75      32.00      28.50      28.50
+3     200010   0.144404       1     1      1  ...  80.186824      52.50      52.50      49.25      49.25
+4     200011   2.422611       2     1      1  ...  86.545682      62.25      59.75      56.25      56.25
+...      ...        ...     ...   ...    ...  ...        ...        ...        ...        ...        ...
+3159  205794   0.362538       2     1      1  ...  79.873126      41.25      23.25      19.75      15.25
+3160  205796   2.108346       2     1      2  ...  78.199883      55.00      49.75      49.75      45.25
+3161  205800  34.415781       1     1      1  ...  70.965909     122.75     120.50     105.50      91.75
+3162  205802   2.163462       1     1      1  ...  89.494163      23.50      15.00       4.75       0.00
+3163  205803   1.038319       1     1      1  ...  77.732380      77.75      74.75      74.75      60.50
+[3164 rows x 44 columns]
+Traceback (most recent call last):
+  File "/home/x-dchawra/polysomnography_2023/all_data_analysis.py", line 68, in <module>
+    X = df.drop(columns=col2drop)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/x-dchawra/mambaforge/envs/ml/lib/python3.11/site-packages/pandas/core/frame.py", line 5258, in drop
+    return super().drop(
+           ^^^^^^^^^^^^^
+  File "/home/x-dchawra/mambaforge/envs/ml/lib/python3.11/site-packages/pandas/core/generic.py", line 4549, in drop
+    obj = obj._drop_axis(labels, axis, level=level, errors=errors)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/x-dchawra/mambaforge/envs/ml/lib/python3.11/site-packages/pandas/core/generic.py", line 4591, in _drop_axis
+    new_axis = axis.drop(labels, errors=errors)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/x-dchawra/mambaforge/envs/ml/lib/python3.11/site-packages/pandas/core/indexes/base.py", line 6696, in drop
+    raise KeyError(f"{list(labels[mask])} not found in axis")
+KeyError: "['nsrrid'] not found in axis"

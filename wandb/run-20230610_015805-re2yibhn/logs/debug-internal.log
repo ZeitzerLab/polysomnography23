@@ -1,0 +1,182 @@
+2023-06-10 01:58:05,381 INFO    StreamThr :3674329 [internal.py:wandb_internal():86] W&B internal server running at pid: 3674329, started at: 2023-06-10 01:58:05.381328
+2023-06-10 01:58:05,383 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: status
+2023-06-10 01:58:05,383 INFO    WriterThread:3674329 [datastore.py:open_for_write():85] open: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/run-re2yibhn.wandb
+2023-06-10 01:58:05,385 DEBUG   SenderThread:3674329 [sender.py:send():369] send: header
+2023-06-10 01:58:05,389 DEBUG   SenderThread:3674329 [sender.py:send():369] send: run
+2023-06-10 01:58:05,613 INFO    SenderThread:3674329 [dir_watcher.py:__init__():211] watching files in: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files
+2023-06-10 01:58:05,613 INFO    SenderThread:3674329 [sender.py:_start_run_threads():1100] run started: re2yibhn with start time 1686376685.380887
+2023-06-10 01:58:05,613 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: summary_record
+2023-06-10 01:58:05,614 INFO    SenderThread:3674329 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-06-10 01:58:05,615 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: check_version
+2023-06-10 01:58:05,615 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: check_version
+2023-06-10 01:58:05,684 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: run_start
+2023-06-10 01:58:05,685 DEBUG   HandlerThread:3674329 [system_info.py:__init__():31] System info init
+2023-06-10 01:58:05,685 DEBUG   HandlerThread:3674329 [system_info.py:__init__():46] System info init done
+2023-06-10 01:58:05,685 INFO    HandlerThread:3674329 [system_monitor.py:start():181] Starting system monitor
+2023-06-10 01:58:05,685 INFO    SystemMonitor:3674329 [system_monitor.py:_start():145] Starting system asset monitoring threads
+2023-06-10 01:58:05,685 INFO    HandlerThread:3674329 [system_monitor.py:probe():201] Collecting system info
+2023-06-10 01:58:05,686 INFO    SystemMonitor:3674329 [interfaces.py:start():190] Started cpu monitoring
+2023-06-10 01:58:05,686 INFO    SystemMonitor:3674329 [interfaces.py:start():190] Started disk monitoring
+2023-06-10 01:58:05,686 INFO    SystemMonitor:3674329 [interfaces.py:start():190] Started memory monitoring
+2023-06-10 01:58:05,687 INFO    SystemMonitor:3674329 [interfaces.py:start():190] Started network monitoring
+2023-06-10 01:58:05,717 DEBUG   HandlerThread:3674329 [system_info.py:probe():195] Probing system
+2023-06-10 01:58:05,719 DEBUG   HandlerThread:3674329 [system_info.py:_probe_git():180] Probing git
+2023-06-10 01:58:05,727 DEBUG   HandlerThread:3674329 [system_info.py:_probe_git():188] Probing git done
+2023-06-10 01:58:05,727 DEBUG   HandlerThread:3674329 [system_info.py:probe():240] Probing system done
+2023-06-10 01:58:05,727 DEBUG   HandlerThread:3674329 [system_monitor.py:probe():210] {'os': 'Linux-4.18.0-425.3.1.el8.x86_64-x86_64-with-glibc2.28', 'python': '3.11.3', 'heartbeatAt': '2023-06-10T05:58:05.717436', 'startedAt': '2023-06-10T05:58:05.370042', 'docker': None, 'cuda': None, 'args': (), 'state': 'running', 'program': '/home/x-dchawra/polysomnography_2023/all_data_analysis.py', 'codePath': 'all_data_analysis.py', 'git': {'remote': 'git@github.com:ZeitzerLab/polysomnography23.git', 'commit': 'd4f4e706828bdabd9f6d661fee5aef4a64f51470'}, 'email': 'dchawra@purdue.edu', 'root': '/home/x-dchawra/polysomnography_2023', 'host': 'login04.anvil.rcac.purdue.edu', 'username': 'x-dchawra', 'executable': '/home/x-dchawra/mambaforge/envs/ml/bin/python', 'cpu_count': 32, 'cpu_count_logical': 32, 'cpu_freq': {'current': 2796.27875, 'min': 1500.0, 'max': 3737.89}, 'cpu_freq_per_core': [{'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 3400.292, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 3572.257, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}, {'current': 2800.0, 'min': 1500.0, 'max': 3737.89}], 'disk': {'total': 251.7547836303711, 'used': 5.250568389892578}, 'memory': {'total': 503.50957107543945}}
+2023-06-10 01:58:05,727 INFO    HandlerThread:3674329 [system_monitor.py:probe():211] Finished collecting system info
+2023-06-10 01:58:05,727 INFO    HandlerThread:3674329 [system_monitor.py:probe():214] Publishing system info
+2023-06-10 01:58:05,727 DEBUG   HandlerThread:3674329 [system_info.py:_save_pip():51] Saving list of pip packages installed into the current environment
+2023-06-10 01:58:05,728 DEBUG   HandlerThread:3674329 [system_info.py:_save_pip():67] Saving pip packages done
+2023-06-10 01:58:05,728 DEBUG   HandlerThread:3674329 [system_info.py:_save_conda():74] Saving list of conda packages installed into the current environment
+2023-06-10 01:58:06,614 INFO    Thread-12 :3674329 [dir_watcher.py:_on_file_created():272] file/dir created: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/wandb-summary.json
+2023-06-10 01:58:06,615 INFO    Thread-12 :3674329 [dir_watcher.py:_on_file_created():272] file/dir created: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/conda-environment.yaml
+2023-06-10 01:58:06,615 INFO    Thread-12 :3674329 [dir_watcher.py:_on_file_created():272] file/dir created: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/requirements.txt
+2023-06-10 01:58:07,302 DEBUG   HandlerThread:3674329 [system_info.py:_save_conda():86] Saving conda packages done
+2023-06-10 01:58:07,303 INFO    HandlerThread:3674329 [system_monitor.py:probe():216] Finished publishing system info
+2023-06-10 01:58:07,306 DEBUG   SenderThread:3674329 [sender.py:send():369] send: files
+2023-06-10 01:58:07,306 INFO    SenderThread:3674329 [sender.py:_save_file():1354] saving file wandb-metadata.json with policy now
+2023-06-10 01:58:07,311 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: stop_status
+2023-06-10 01:58:07,311 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: stop_status
+2023-06-10 01:58:07,381 DEBUG   SenderThread:3674329 [sender.py:send():369] send: telemetry
+2023-06-10 01:58:07,382 DEBUG   SenderThread:3674329 [sender.py:send():369] send: exit
+2023-06-10 01:58:07,382 INFO    SenderThread:3674329 [sender.py:send_exit():574] handling exit code: 1
+2023-06-10 01:58:07,383 INFO    SenderThread:3674329 [sender.py:send_exit():576] handling runtime: 1
+2023-06-10 01:58:07,383 INFO    SenderThread:3674329 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-06-10 01:58:07,383 INFO    SenderThread:3674329 [sender.py:send_exit():582] send defer
+2023-06-10 01:58:07,383 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:07,384 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 0
+2023-06-10 01:58:07,384 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:07,384 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 0
+2023-06-10 01:58:07,384 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 1
+2023-06-10 01:58:07,384 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:07,384 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 1
+2023-06-10 01:58:07,384 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:07,384 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 1
+2023-06-10 01:58:07,384 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 2
+2023-06-10 01:58:07,384 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:07,384 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 2
+2023-06-10 01:58:07,385 INFO    HandlerThread:3674329 [system_monitor.py:finish():190] Stopping system monitor
+2023-06-10 01:58:07,385 DEBUG   SystemMonitor:3674329 [system_monitor.py:_start():159] Starting system metrics aggregation loop
+2023-06-10 01:58:07,385 DEBUG   SystemMonitor:3674329 [system_monitor.py:_start():166] Finished system metrics aggregation loop
+2023-06-10 01:58:07,385 INFO    HandlerThread:3674329 [interfaces.py:finish():202] Joined cpu monitor
+2023-06-10 01:58:07,385 DEBUG   SystemMonitor:3674329 [system_monitor.py:_start():170] Publishing last batch of metrics
+2023-06-10 01:58:07,385 INFO    HandlerThread:3674329 [interfaces.py:finish():202] Joined disk monitor
+2023-06-10 01:58:07,386 INFO    HandlerThread:3674329 [interfaces.py:finish():202] Joined memory monitor
+2023-06-10 01:58:07,386 INFO    HandlerThread:3674329 [interfaces.py:finish():202] Joined network monitor
+2023-06-10 01:58:07,386 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:07,386 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 2
+2023-06-10 01:58:07,386 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 3
+2023-06-10 01:58:07,387 DEBUG   SenderThread:3674329 [sender.py:send():369] send: stats
+2023-06-10 01:58:07,387 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:07,387 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 3
+2023-06-10 01:58:07,387 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:07,387 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 3
+2023-06-10 01:58:07,387 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 4
+2023-06-10 01:58:07,387 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:07,387 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 4
+2023-06-10 01:58:07,387 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:07,387 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 4
+2023-06-10 01:58:07,388 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 5
+2023-06-10 01:58:07,388 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:07,388 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 5
+2023-06-10 01:58:07,388 DEBUG   SenderThread:3674329 [sender.py:send():369] send: summary
+2023-06-10 01:58:07,389 INFO    SenderThread:3674329 [sender.py:_save_file():1354] saving file wandb-summary.json with policy end
+2023-06-10 01:58:07,389 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:07,389 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 5
+2023-06-10 01:58:07,389 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 6
+2023-06-10 01:58:07,389 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:07,389 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 6
+2023-06-10 01:58:07,390 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:07,390 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 6
+2023-06-10 01:58:07,392 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: status_report
+2023-06-10 01:58:07,469 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 7
+2023-06-10 01:58:07,469 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:07,469 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 7
+2023-06-10 01:58:07,469 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:07,469 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 7
+2023-06-10 01:58:07,614 INFO    Thread-12 :3674329 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/config.yaml
+2023-06-10 01:58:07,614 INFO    Thread-12 :3674329 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/wandb-summary.json
+2023-06-10 01:58:07,614 INFO    Thread-12 :3674329 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/conda-environment.yaml
+2023-06-10 01:58:07,615 INFO    Thread-12 :3674329 [dir_watcher.py:_on_file_created():272] file/dir created: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/output.log
+2023-06-10 01:58:07,615 INFO    Thread-12 :3674329 [dir_watcher.py:_on_file_created():272] file/dir created: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/wandb-metadata.json
+2023-06-10 01:58:07,710 INFO    wandb-upload_0:3674329 [upload_job.py:push():133] Uploaded file /tmp/tmp12k80rp0wandb/0slk3rof-wandb-metadata.json
+2023-06-10 01:58:08,362 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: poll_exit
+2023-06-10 01:58:09,615 INFO    Thread-12 :3674329 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/output.log
+2023-06-10 01:58:11,387 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 8
+2023-06-10 01:58:11,387 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: poll_exit
+2023-06-10 01:58:11,387 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:11,387 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 8
+2023-06-10 01:58:11,388 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:11,388 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 8
+2023-06-10 01:58:11,388 INFO    SenderThread:3674329 [job_builder.py:build():232] Attempting to build job artifact
+2023-06-10 01:58:11,388 INFO    SenderThread:3674329 [job_builder.py:build():256] is repo sourced job
+2023-06-10 01:58:11,390 INFO    SenderThread:3674329 [job_builder.py:build():297] adding wandb-job metadata file
+2023-06-10 01:58:11,393 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 9
+2023-06-10 01:58:11,394 DEBUG   SenderThread:3674329 [sender.py:send():369] send: artifact
+2023-06-10 01:58:11,394 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:11,395 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 9
+2023-06-10 01:58:11,616 INFO    Thread-12 :3674329 [dir_watcher.py:_on_file_modified():289] file/dir modified: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/output.log
+2023-06-10 01:58:12,079 INFO    wandb-upload_1:3674329 [upload_job.py:push():91] Uploaded file /home/x-dchawra/.local/share/wandb/artifacts/staging/tmpmfdbhvr6
+2023-06-10 01:58:12,080 INFO    wandb-upload_0:3674329 [upload_job.py:push():91] Uploaded file /home/x-dchawra/.local/share/wandb/artifacts/staging/tmpxrk7pvyq
+2023-06-10 01:58:12,674 INFO    SenderThread:3674329 [sender.py:send_artifact():1450] sent artifact job-git_github.com_ZeitzerLab_polysomnography23.git_all_data_analysis.py - {'id': 'QXJ0aWZhY3Q6NDgzMzYxNDEy', 'digest': '5718270b1c1f4664e40af836f148c52f', 'state': 'PENDING', 'aliases': [], 'artifactSequence': {'id': 'QXJ0aWZhY3RDb2xsZWN0aW9uOjc1ODIxNzI0', 'latestArtifact': None}, 'version': 'latest'}
+2023-06-10 01:58:12,674 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:12,675 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 9
+2023-06-10 01:58:12,675 INFO    SenderThread:3674329 [dir_watcher.py:finish():359] shutting down directory watcher
+2023-06-10 01:58:13,363 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: keepalive
+2023-06-10 01:58:13,616 INFO    SenderThread:3674329 [dir_watcher.py:finish():389] scan: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files
+2023-06-10 01:58:13,617 INFO    SenderThread:3674329 [dir_watcher.py:finish():403] scan save: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/config.yaml config.yaml
+2023-06-10 01:58:13,617 INFO    SenderThread:3674329 [dir_watcher.py:finish():403] scan save: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/wandb-summary.json wandb-summary.json
+2023-06-10 01:58:13,619 INFO    SenderThread:3674329 [dir_watcher.py:finish():403] scan save: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/requirements.txt requirements.txt
+2023-06-10 01:58:13,619 INFO    SenderThread:3674329 [dir_watcher.py:finish():403] scan save: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/wandb-metadata.json wandb-metadata.json
+2023-06-10 01:58:13,619 INFO    SenderThread:3674329 [dir_watcher.py:finish():403] scan save: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/conda-environment.yaml conda-environment.yaml
+2023-06-10 01:58:13,622 INFO    SenderThread:3674329 [dir_watcher.py:finish():403] scan save: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/output.log output.log
+2023-06-10 01:58:13,623 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 10
+2023-06-10 01:58:13,623 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:13,625 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 10
+2023-06-10 01:58:13,626 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:13,627 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 10
+2023-06-10 01:58:13,627 INFO    SenderThread:3674329 [file_pusher.py:finish():159] shutting down file pusher
+2023-06-10 01:58:13,908 INFO    wandb-upload_1:3674329 [upload_job.py:push():133] Uploaded file /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/config.yaml
+2023-06-10 01:58:13,972 INFO    wandb-upload_2:3674329 [upload_job.py:push():133] Uploaded file /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/requirements.txt
+2023-06-10 01:58:14,000 INFO    wandb-upload_4:3674329 [upload_job.py:push():133] Uploaded file /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/output.log
+2023-06-10 01:58:14,002 INFO    wandb-upload_3:3674329 [upload_job.py:push():133] Uploaded file /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/conda-environment.yaml
+2023-06-10 01:58:14,061 INFO    wandb-upload_0:3674329 [upload_job.py:push():133] Uploaded file /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/files/wandb-summary.json
+2023-06-10 01:58:14,261 INFO    Thread-11 (_thread_body):3674329 [sender.py:transition_state():602] send defer: 11
+2023-06-10 01:58:14,261 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:14,261 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 11
+2023-06-10 01:58:14,262 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:14,262 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 11
+2023-06-10 01:58:14,262 INFO    SenderThread:3674329 [file_pusher.py:join():164] waiting for file pusher
+2023-06-10 01:58:14,262 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 12
+2023-06-10 01:58:14,262 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:14,262 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 12
+2023-06-10 01:58:14,262 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:14,262 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 12
+2023-06-10 01:58:14,324 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 13
+2023-06-10 01:58:14,324 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:14,324 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 13
+2023-06-10 01:58:14,324 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:14,324 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 13
+2023-06-10 01:58:14,324 INFO    SenderThread:3674329 [sender.py:transition_state():602] send defer: 14
+2023-06-10 01:58:14,325 DEBUG   SenderThread:3674329 [sender.py:send():369] send: final
+2023-06-10 01:58:14,325 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: defer
+2023-06-10 01:58:14,325 DEBUG   SenderThread:3674329 [sender.py:send():369] send: footer
+2023-06-10 01:58:14,325 INFO    HandlerThread:3674329 [handler.py:handle_request_defer():170] handle defer: 14
+2023-06-10 01:58:14,325 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: defer
+2023-06-10 01:58:14,325 INFO    SenderThread:3674329 [sender.py:send_request_defer():598] handle sender defer: 14
+2023-06-10 01:58:14,325 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: poll_exit
+2023-06-10 01:58:14,326 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: poll_exit
+2023-06-10 01:58:14,326 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: server_info
+2023-06-10 01:58:14,326 DEBUG   SenderThread:3674329 [sender.py:send_request():396] send_request: server_info
+2023-06-10 01:58:14,327 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: get_summary
+2023-06-10 01:58:14,328 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: sampled_history
+2023-06-10 01:58:14,360 INFO    MainThread:3674329 [wandb_run.py:_footer_history_summary_info():3467] rendering history
+2023-06-10 01:58:14,360 INFO    MainThread:3674329 [wandb_run.py:_footer_history_summary_info():3499] rendering summary
+2023-06-10 01:58:14,360 INFO    MainThread:3674329 [wandb_run.py:_footer_sync_info():3426] logging synced files
+2023-06-10 01:58:14,360 DEBUG   HandlerThread:3674329 [handler.py:handle_request():144] handle_request: shutdown
+2023-06-10 01:58:14,360 INFO    HandlerThread:3674329 [handler.py:finish():854] shutting down handler
+2023-06-10 01:58:15,326 INFO    WriterThread:3674329 [datastore.py:close():298] close: /home/x-dchawra/polysomnography_2023/wandb/run-20230610_015805-re2yibhn/run-re2yibhn.wandb
+2023-06-10 01:58:15,360 INFO    SenderThread:3674329 [sender.py:finish():1526] shutting down sender
+2023-06-10 01:58:15,360 INFO    SenderThread:3674329 [file_pusher.py:finish():159] shutting down file pusher
+2023-06-10 01:58:15,360 INFO    SenderThread:3674329 [file_pusher.py:join():164] waiting for file pusher

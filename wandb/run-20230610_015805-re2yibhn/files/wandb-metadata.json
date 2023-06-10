@@ -1,0 +1,197 @@
+{
+    "os": "Linux-4.18.0-425.3.1.el8.x86_64-x86_64-with-glibc2.28",
+    "python": "3.11.3",
+    "heartbeatAt": "2023-06-10T05:58:05.717436",
+    "startedAt": "2023-06-10T05:58:05.370042",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/home/x-dchawra/polysomnography_2023/all_data_analysis.py",
+    "codePath": "all_data_analysis.py",
+    "git": {
+        "remote": "git@github.com:ZeitzerLab/polysomnography23.git",
+        "commit": "d4f4e706828bdabd9f6d661fee5aef4a64f51470"
+    },
+    "email": "dchawra@purdue.edu",
+    "root": "/home/x-dchawra/polysomnography_2023",
+    "host": "login04.anvil.rcac.purdue.edu",
+    "username": "x-dchawra",
+    "executable": "/home/x-dchawra/mambaforge/envs/ml/bin/python",
+    "cpu_count": 32,
+    "cpu_count_logical": 32,
+    "cpu_freq": {
+        "current": 2796.27875,
+        "min": 1500.0,
+        "max": 3737.89
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 3400.292,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 3572.257,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        },
+        {
+            "current": 2800.0,
+            "min": 1500.0,
+            "max": 3737.89
+        }
+    ],
+    "disk": {
+        "total": 251.7547836303711,
+        "used": 5.250568389892578
+    },
+    "memory": {
+        "total": 503.50957107543945
+    }
+}

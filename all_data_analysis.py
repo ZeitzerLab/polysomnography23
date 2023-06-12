@@ -69,43 +69,44 @@ X = df.drop(columns=col2drop)
 y = df.iloc[:, df.columns.get_loc(target_column)].values
 
 output_data = []
-
-xtr, xtest, ytr, ytest = train_test_split(X.values, y, test_size=0.25, random_state=0)
-
-print("RANDOM FOREST PARAMETERS")
-rf_params = rf_optimizer(xtr, ytr)
 #WASO_2min,WASO_3min,WASO_4min,WASO_5min
 # need to repeat with only 1 of these columns in the data
-for j in [rf_params.get('n_estimators'), 500, 1000, 1500, 2000, 2500]:
-    rf_predictor = RandomForestRegressor(**rf_params)
-    rf_predictor.fit(xtr, ytr)
-    cols = X.columns
 
-    pprint(len(cols))
-    pprint(len(rf_predictor.feature_importances_))
+for i in thresholds:
+    xtr, xtest, ytr, ytest = train_test_split(X.values, y, test_size=0.25, random_state=0)
 
-    dict = {rf_predictor.feature_importances_[d]: cols[d] for d in range(0, len(cols))}
+    print("RANDOM FOREST PARAMETERS")
+    rf_params = rf_optimizer(xtr, ytr)
 
-    featuredict = OrderedDict(sorted(dict.items()))
 
-    # pprint(featuredict)
-    # plt.figure(figsize=(featuredict.values(),featuredict.keys()))
-    # plt.bar([featuredict[i][1] for i in range(0, len(featuredict))], [featuredict[i][0] for i in range(0, len(featuredict))])
-    plt.bar(featuredict.values(), featuredict.keys())
-    plt.title('Feature Importances interval ' + str(i) + ' estimators ' + str(j) + " " + 'sleep_' + str(
-        i) + '_renewed.csv')
-    # plt.tick_params(axis="x", which="major", pad=10)
-    plt.xticks(rotation=90)
+rf_predictor = RandomForestRegressor(**rf_params)
+rf_predictor.fit(xtr, ytr)
+cols = X.columns
 
-    y_pred_rf = rf_predictor.predict(xtest)
-    plt.text(0, 0.02, "error:" + str(mean_squared_error(ytest, y_pred_rf)))
-    plt.text(0, 0.015, "r2:" + str(np.corrcoef(ytest, y_pred_rf)[0][1]))
-    plt.tight_layout()
+pprint(len(cols))
+pprint(len(rf_predictor.feature_importances_))
 
-    # plt.setp(featuredict.values(), rotation=30, horizontalalignment='right')
-    plt.savefig(
-        'autoscored_eff_plots\\Feature Importances for interval ' + str(i) + ' estimators ' + str(j) + '.png')
-    plt.show()
+dict = {rf_predictor.feature_importances_[d]: cols[d] for d in range(0, len(cols))}
+
+featuredict = OrderedDict(sorted(dict.items()))
+
+# pprint(featuredict)
+# plt.figure(figsize=(featuredict.values(),featuredict.keys()))
+# plt.bar([featuredict[i][1] for i in range(0, len(featuredict))], [featuredict[i][0] for i in range(0, len(featuredict))])
+plt.bar(featuredict.values(), featuredict.keys())
+plt.title('Feature Importances')
+# plt.tick_params(axis="x", which="major", pad=10)
+plt.xticks(rotation=90)
+
+y_pred_rf = rf_predictor.predict(xtest)
+plt.text(0, 0.02, "error:" + str(mean_squared_error(ytest, y_pred_rf)))
+plt.text(0, 0.015, "r2:" + str(np.corrcoef(ytest, y_pred_rf)[0][1]))
+plt.tight_layout()
+
+# plt.setp(featuredict.values(), rotation=30, horizontalalignment='right')
+plt.savefig(
+    'autoscored_eff_plots\\Feature Importances for interval ' + str(i) + ' estimators ' + str(j) + '.png')
+plt.show()
 
 # lasso_predictor = Lasso(**lasso_params)
 # lasso_predictor.fit(xtest, ytest)

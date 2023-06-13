@@ -30,7 +30,7 @@ thresholds = [2, 3, 4, 5]
 wasoresults = []
 for threshold in thresholds:
     wasoresults.append([])
-original_csv = "datafullnight2_SE.csv"
+original_csv = "csvdata/datafullnight2_SE.csv"
 
 directory_path = Path("donehypnogram")
 files = os.listdir(directory_path)
@@ -53,10 +53,17 @@ for filename in tqdm(files):
             waso = calculate_waso(threshold, file_path)
             wasoresults[i].append(waso)
 
+# this makes a new csv for each threshold
+for i, threshold in enumerate(thresholds):
+    clone = df.copy()
+    newcolname = "WASO_" + str(threshold) + "min"
+    clone[newcolname] = wasoresults[i]
+    clone.to_csv("csvdata/datafullnight2_SE_waso" + str(threshold) + ".csv", index=False)
+
+# this makes a new csv with all thresholds
 for i, threshold in enumerate(thresholds):
     newcolname = "WASO_" + str(threshold) + "min"
     df[newcolname] = wasoresults[i]
-
-df.to_csv("datafullnight2_SE_waso.csv", index=False)
+df.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thresholds]) + ".csv", index=False)
 
             

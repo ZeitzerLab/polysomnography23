@@ -26,7 +26,7 @@ wandb.init(project="visualize-sklearn")
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--param_file', type=str)
 args = argparser.parse_args()
-hypfilepath = args.param_file
+paramfilepath = args.param_file
 
 
 
@@ -44,15 +44,7 @@ output_data = []
 
 xtr, xtest, ytr, ytest = train_test_split(X.values, y, test_size=0.25, random_state=0)
 
-print("RANDOM FOREST PARAMETER OPTIMIZATION")   
-rf_params = rf_optimizer(xtr, ytr)
-
-# rf_params is json
-# write to file
-with open('autoscored_eff_plots/rf_params_wasothreshold' + str(input_threshold) + '.json', 'w') as fp:
-    json.dump(rf_params, fp)
-
-
+rf_params = json.load(open(paramfilepath, "r"))
 
 # this is the same as the above, but with the best parameters from the previous step
 rf_predictor = RandomForestRegressor(**rf_params)

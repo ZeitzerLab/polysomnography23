@@ -109,35 +109,3 @@ rf_params = rf_optimizer(xtr, ytr)
 # write to file
 with open('optimized_params/rf_params_wasothreshold' + str(wasointerval) + '.json', 'w') as fp:
     json.dump(rf_params, fp)
-
-
-
-# this is the same as the above, but with the best parameters from the previous step
-rf_predictor = RandomForestRegressor(**rf_params)
-rf_predictor.fit(xtr, ytr)
-cols = X.columns
-
-pprint(len(cols))
-pprint(len(rf_predictor.feature_importances_))
-
-# this gets the feature importances and sorts them
-dict = {rf_predictor.feature_importances_[d]: cols[d] for d in range(0, len(cols))}
-featuredict = OrderedDict(sorted(dict.items()))
-
-# pprint(featuredict)
-# plt.figure(figsize=(featuredict.values(),featuredict.keys()))
-# plt.bar([featuredict[i][1] for i in range(0, len(featuredict))], [featuredict[i][0] for i in range(0, len(featuredict))])
-plt.bar(featuredict.values(), featuredict.keys())
-plt.title('Feature Importances')
-# plt.tick_params(axis="x", which="major", pad=10)
-plt.xticks(rotation=90)
-
-y_pred_rf = rf_predictor.predict(xtest)
-plt.text(0, 0.02, "error:" + str(mean_squared_error(ytest, y_pred_rf)))
-plt.text(0, 0.015, "r2:" + str(np.corrcoef(ytest, y_pred_rf)[0][1]))
-plt.tight_layout()
-
-# plt.setp(featuredict.values(), rotation=30, horizontalalignment='right')
-plt.savefig(
-    'featureimpplots/Feature Importances for waso interval ' + str(wasointerval) + '.png')
-plt.show()

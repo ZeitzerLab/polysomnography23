@@ -11,6 +11,7 @@ from sklearn.linear_model import Lasso
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import roc_curve, auc
 import json
 import argparse
 
@@ -23,11 +24,11 @@ import wandb
 wandb.init(project="visualize-sklearn")
 
 argparser = argparse.ArgumentParser()
-argparser.add_argument('--input_threshold', type=int, default=2)
+argparser.add_argument('--wasoint', type=int, default=2)
 argparser.add_argument('--threads', type=int, default=32)
 args = argparser.parse_args()
-input_threshold = args.input_threshold
-
+wasointerval = args.wasoint
+threads = args.threads
 
 def rf_optimizer(xtrain, ytrain):
     # Create the random grid
@@ -35,7 +36,7 @@ def rf_optimizer(xtrain, ytrain):
     n_estimators = [int(x) for x in np.arange(start=50, stop=1000, step=100)]
     n_estimators = [10, 20, 50, 100, 200, 500, 1000]
     # Number of features to consider at every split
-    max_features = ['auto', 'sqrt']
+    max_features = [1.0, "sqrt", 0.5]
     # Maximum number of levels in tree
     max_depth = [int(x) for x in np.arange(2, 100, step=10)]
     max_depth.append(None)
@@ -49,24 +50,49 @@ def rf_optimizer(xtrain, ytrain):
                    'max_depth': max_depth,
                    'min_samples_split': min_samples_split,
                    'min_samples_leaf': min_samples_leaf}
-
+    
     # Use the random grid to search for best hyperparameters
     # First create the base model to tune
-    # Random search of parameters, using 3 fold cross validation,
+    # Random search of parameters, using 5 fold cross validation,
     # search across 100 different combinations, and use all available cores
     rf_regressor = RandomizedSearchCV(estimator=RandomForestRegressor(bootstrap=True), param_distributions=random_grid,
-                                      n_iter=25,
-                                      cv=5, verbose=1,
+                                      n_iter=100,
+                                      cv=5, verbose=3,
                                       random_state=42, n_jobs=threads)
+
+        
     # Fit the random search model
     rf_regressor.fit(xtrain, ytrain)
     pprint(rf_regressor.best_params_)
+
+    # # Calculate predicted probabilities for the test set
+    # yproba = rf_regressor.predict(xtest)
+    
+    # # Compute the false positive rate, true positive rate, and thresholds
+    # fpr, tpr, thresholds = roc_curve(ytest, yproba)
+    
+    # # Calculate the AUC (Area Under the Curve)
+    # roc_auc = auc(fpr, tpr)
+    
+    # # Plot the ROC curve
+    # plt.figure()
+    # plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % roc_auc)
+    # plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
+    # plt.xlim([0.0, 1.0])
+    # plt.ylim([0.0, 1.05])
+    # plt.xlabel('False Positive Rate')
+    # plt.ylabel('True Positive Rate')
+    # plt.title('Receiver Operating Characteristic')
+    # plt.legend(loc="lower right")
+    # plt.show()
+    wandb.sklearn.plot_learning_curve(rf_regressor.best_estimator_, xtrain, ytrain)
     return rf_regressor.best_params_
 
 finalarray = ["second interval", "rf_params", "lasso_params", "rf_r^2", "lasso_r^2", "WASO (min)"]
 
 # Importing the dataset
-
+# create the filename
+filename = "csvdata/datafullnight2_SE_waso" + str(wasointerval) + ".csv"
 df = pd.read_csv(filename)
 
 print(df)
@@ -81,7 +107,7 @@ rf_params = rf_optimizer(xtr, ytr)
 
 # rf_params is json
 # write to file
-with open('autoscored_eff_plots/rf_params_wasothreshold' + str(input_threshold) + '.json', 'w') as fp:
+with open('optimized_params/rf_params_wasothreshold' + str(wasointerval) + '.json', 'w') as fp:
     json.dump(rf_params, fp)
 
 
@@ -113,7 +139,5 @@ plt.tight_layout()
 
 # plt.setp(featuredict.values(), rotation=30, horizontalalignment='right')
 plt.savefig(
-    'autoscored_eff_plots\\Feature Importances for waso interval ' + str(input_threshold) + '.png')
+    'featureimpplots/Feature Importances for waso interval ' + str(wasointerval) + '.png')
 plt.show()
-
-np.savetxt("autoscored_eff_plots/output_" + str(input_threshold) + ".csv", np.asarray(output_data), delimiter=",", fmt='%s')

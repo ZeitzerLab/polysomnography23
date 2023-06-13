@@ -53,17 +53,28 @@ for filename in tqdm(files):
             waso = calculate_waso(threshold, file_path)
             wasoresults[i].append(waso)
 
-# this makes a new csv for each threshold
-for i, threshold in enumerate(thresholds):
-    clone = df.copy()
-    newcolname = "WASO_" + str(threshold) + "min"
-    clone[newcolname] = wasoresults[i]
-    clone.to_csv("csvdata/datafullnight2_SE_waso" + str(threshold) + ".csv", index=False)
+allcols = df.copy(deep=True)
 
 # this makes a new csv with all thresholds
 for i, threshold in enumerate(thresholds):
     newcolname = "WASO_" + str(threshold) + "min"
-    df[newcolname] = wasoresults[i]
-df.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thresholds]) + ".csv", index=False)
+    allcols[newcolname] = wasoresults[i]
+
+    print(allcols.columns)
+allcols.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thresholds]) + ".csv", index=False)
+
+
+# drop col 29 as this is the original WASO column
+df = df.drop(df.columns[29], axis=1)
+
+print(df.columns)
+# this makes a new csv for each threshold
+for i, threshold in enumerate(thresholds):
+    clone = df.copy(deep=True)
+    newcolname = "WASO_" + str(threshold) + "min"
+    clone[newcolname] = wasoresults[i]
+    print(clone.columns)
+    clone.to_csv("csvdata/datafullnight2_SE_waso" + str(threshold) + ".csv", index=False)
+
 
             

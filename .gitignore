@@ -3,3 +3,4 @@ data_dictionary.csv
 hypnogramFiles/*
 donehypnogram/*
 hypnogramFiles.zip
+wandb/*

@@ -52,18 +52,18 @@ cols = X.columns
 # pprint(len(cols))
 # pprint(len(rf_predictor.feature_importances_))
 
-wasocolname = "WASO_" + str(wasoint) + "min"
+# wasocolname = "WASO_" + str(wasoint) + "min"
 
-total = 0
-for i in rf_predictor.feature_importances_:
-    # sum 
-    total += i
+# total = 0
+# for i in rf_predictor.feature_importances_:
+#     # sum 
+#     total += i
 
-print("total: " + str(total))
+# print("total: " + str(total))
 
-# waso divided by total
-wasoimp = rf_predictor.feature_importances_[cols.get_loc(wasocolname)] / total
-print("waso importance: " + str(wasoimp))
+# # waso divided by total
+# wasoimp = rf_predictor.feature_importances_[cols.get_loc(wasocolname)] / total
+# print("waso importance: " + str(wasoimp))
 
 # this gets the feature importances and sorts them
 dict = {rf_predictor.feature_importances_[d]: cols[d] for d in range(0, len(cols))}

@@ -56,7 +56,7 @@ def rf_optimizer(xtrain, ytrain):
     # Random search of parameters, using 5 fold cross validation,
     # search across 100 different combinations, and use all available cores
     rf_regressor = RandomizedSearchCV(estimator=RandomForestRegressor(bootstrap=True), param_distributions=random_grid,
-                                      n_iter=200,
+                                      n_iter=100,
                                       cv=5, verbose=3,
                                       random_state=42, n_jobs=threads)
 

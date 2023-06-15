@@ -20,11 +20,11 @@ col2drop = ["LTDP10", "REST10", "ESS_s1", "nsrrid"] # these are all the response
 target_column = "LTDP10"
 # =================================================
 
-import wandb
-wandb.init(project="visualize-sklearn")
+# import wandb
+# wandb.init(project="visualize-sklearn")
 
 argparser = argparse.ArgumentParser()
-argparser.add_argument('--wasoint', type=int, default=2)
+argparser.add_argument('--wasoint', default=2)
 argparser.add_argument('--threads', type=int, default=32)
 args = argparser.parse_args()
 wasointerval = args.wasoint
@@ -33,7 +33,7 @@ threads = args.threads
 def rf_optimizer(xtrain, ytrain):
     # Create the random grid
     # Number of trees in random forest
-    n_estimators = [int(x) for x in np.arange(start=50, stop=1000, step=100)]
+    n_estimators = [int(x) for x in np.arange(start=50, stop=200, step=50)]
     n_estimators = [10, 20, 50, 100, 200, 500, 1000]
     # Number of features to consider at every split
     max_features = [1.0, "sqrt", 0.5]
@@ -41,7 +41,7 @@ def rf_optimizer(xtrain, ytrain):
     max_depth = [int(x) for x in np.arange(2, 100, step=10)]
     max_depth.append(None)
     # Minimum number of samples required to split a node
-    min_samples_split = [5, 7, 8, 10, 20]
+    min_samples_split = [1, 2, 3, 4, 5, 7, 8]
     # Minimum number of samples required at each leaf node
     min_samples_leaf = [2, 4, 8, 12]
     # Create the random grid
@@ -56,7 +56,7 @@ def rf_optimizer(xtrain, ytrain):
     # Random search of parameters, using 5 fold cross validation,
     # search across 100 different combinations, and use all available cores
     rf_regressor = RandomizedSearchCV(estimator=RandomForestRegressor(bootstrap=True), param_distributions=random_grid,
-                                      n_iter=100,
+                                      n_iter=200,
                                       cv=5, verbose=3,
                                       random_state=42, n_jobs=threads)
 
@@ -65,27 +65,13 @@ def rf_optimizer(xtrain, ytrain):
     rf_regressor.fit(xtrain, ytrain)
     pprint(rf_regressor.best_params_)
 
-    # # Calculate predicted probabilities for the test set
-    # yproba = rf_regressor.predict(xtest)
-    
-    # # Compute the false positive rate, true positive rate, and thresholds
-    # fpr, tpr, thresholds = roc_curve(ytest, yproba)
-    
-    # # Calculate the AUC (Area Under the Curve)
-    # roc_auc = auc(fpr, tpr)
-    
-    # # Plot the ROC curve
-    # plt.figure()
-    # plt.plot(fpr, tpr, color='darkorange', lw=2, label='ROC curve (area = %0.2f)' % roc_auc)
-    # plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
-    # plt.xlim([0.0, 1.0])
-    # plt.ylim([0.0, 1.05])
-    # plt.xlabel('False Positive Rate')
-    # plt.ylabel('True Positive Rate')
-    # plt.title('Receiver Operating Characteristic')
-    # plt.legend(loc="lower right")
-    # plt.show()
-    wandb.sklearn.plot_learning_curve(rf_regressor.best_estimator_, xtrain, ytrain)
+    print("CV RESULTS")
+    cv_results_df = pd.DataFrame(rf_regressor.cv_results_)
+
+    # Export the DataFrame to a CSV file
+    cv_results_df.to_csv('cv_results.csv', index=False)
+
+    # wandb.sklearn.plot_learning_curve(rf_regressor.best_estimator_, xtrain, ytrain)
     return rf_regressor.best_params_
 
 finalarray = ["second interval", "rf_params", "lasso_params", "rf_r^2", "lasso_r^2", "WASO (min)"]
@@ -93,6 +79,9 @@ finalarray = ["second interval", "rf_params", "lasso_params", "rf_r^2", "lasso_r
 # Importing the dataset
 # create the filename
 filename = "csvdata/datafullnight2_SE_waso" + str(wasointerval) + ".csv"
+if wasointerval == 0:
+    filename = "csvdata/datafullnight2_SE.csv"
+
 df = pd.read_csv(filename)
 
 print(df)

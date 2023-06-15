@@ -26,7 +26,7 @@ def calculate_waso(threshold_minutes, filepath):
     return waso
 
 
-thresholds = [2, 3, 4, 5]
+thresholds = [.25, 0.5, 0.75, 1, 2, 3, 4, 5, 10]
 wasoresults = []
 for threshold in thresholds:
     wasoresults.append([])

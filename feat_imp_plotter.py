@@ -17,33 +17,31 @@ import argparse
 # =================================================
 col2drop = ["LTDP10", "REST10", "ESS_s1", "nsrrid"]
 target_column = "LTDP10"
-filename = "datafullnight2_SE_waso.csv"
 # =================================================
 
-import wandb
-wandb.init(project="visualize-sklearn")
-
 argparser = argparse.ArgumentParser()
-argparser.add_argument('--param_file', type=str)
+argparser.add_argument('--wasoint', type=str)
 args = argparser.parse_args()
-paramfilepath = args.param_file
+wasoint = args.wasoint
 
 
 
 finalarray = ["second interval", "rf_params", "lasso_params", "rf_r^2", "lasso_r^2", "WASO (min)"]
 
 # Importing the dataset
+filename = "csvdata/datafullnight2_SE_waso" + str(wasoint) + ".csv"
+if wasoint == "0":
+    filename = "csvdata/datafullnight2_SE.csv"
 df = pd.read_csv(filename)
 
-print(df)
+# print(df)
 
 X = df.drop(columns=col2drop)
 y = df.iloc[:, df.columns.get_loc(target_column)].values
 
-output_data = []
-
 xtr, xtest, ytr, ytest = train_test_split(X.values, y, test_size=0.25, random_state=0)
 
+paramfilepath = "optimized_params/rf_params_wasothreshold" + wasoint + ".json"
 rf_params = json.load(open(paramfilepath, "r"))
 
 # this is the same as the above, but with the best parameters from the previous step
@@ -51,8 +49,21 @@ rf_predictor = RandomForestRegressor(**rf_params)
 rf_predictor.fit(xtr, ytr)
 cols = X.columns
 
-pprint(len(cols))
-pprint(len(rf_predictor.feature_importances_))
+# pprint(len(cols))
+# pprint(len(rf_predictor.feature_importances_))
+
+wasocolname = "WASO_" + str(wasoint) + "min"
+
+total = 0
+for i in rf_predictor.feature_importances_:
+    # sum 
+    total += i
+
+print("total: " + str(total))
+
+# waso divided by total
+wasoimp = rf_predictor.feature_importances_[cols.get_loc(wasocolname)] / total
+print("waso importance: " + str(wasoimp))
 
 # this gets the feature importances and sorts them
 dict = {rf_predictor.feature_importances_[d]: cols[d] for d in range(0, len(cols))}
@@ -73,11 +84,5 @@ plt.tight_layout()
 
 # plt.setp(featuredict.values(), rotation=30, horizontalalignment='right')
 plt.savefig(
-    'autoscored_eff_plots\\Feature Importances for waso interval ' + str(input_threshold) + '.png')
+    'featureimpplots/Feature Importances for waso interval ' + str(wasoint) + '.png')
 plt.show()
-
-np.savetxt("autoscored_eff_plots/output_" + str(input_threshold) + ".csv", np.asarray(output_data), delimiter=",", fmt='%s')
-
-finalarray.append(output_data)
-
-np.savetxt("autoscored_eff_plots/finaldata.csv", np.asarray(finalarray), delimiter=",", fmt='%s')

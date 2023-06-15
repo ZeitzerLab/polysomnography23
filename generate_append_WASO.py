@@ -5,6 +5,11 @@ from pathlib import Path
 from tqdm import tqdm
 import argparse
 
+##COLS TO INCLUDE =======================
+duration = False
+frequency = True
+## ======================================
+
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--thresholds', nargs='+')
 args = argparser.parse_args()
@@ -79,10 +84,12 @@ print("Generating csv with all cols")
 
 # this makes a new csv with all thresholds
 for i, threshold in enumerate(thresholds):
-    newwasoname = "WASO_" + str(threshold) + "min"
-    newfreqname = "WASO_" + str(threshold) + "freq"
-    allcols[newwasoname] = wasoresults[i]
-    allcols[newfreqname] = freqresults[i]
+    if duration:
+        newwasoname = "WASO_" + str(threshold) + "min"
+        allcols[newwasoname] = wasoresults[i]
+    if frequency:
+        newfreqname = "WASO_" + str(threshold) + "freq"
+        allcols[newfreqname] = freqresults[i]
 
 allcols.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thresholds]) + ".csv", index=False)
 
@@ -95,10 +102,12 @@ df = df.drop(df.columns[29], axis=1)
 for i, threshold in enumerate(thresholds):
     print("Generating csv for threshold: " + str(threshold))
     clone = df.copy(deep=True)
-    newcolname = "WASO_" + str(threshold) + "min"
-    newfreqname = "WASO_" + str(threshold) + "freq"
-    clone[newcolname] = wasoresults[i]
-    clone[newfreqname] = freqresults[i]
+    if duration:
+        newcolname = "WASO_" + str(threshold) + "min"
+        clone[newcolname] = wasoresults[i]
+    if frequency:
+        newfreqname = "WASO_" + str(threshold) + "freq"
+        clone[newfreqname] = freqresults[i]
     clone.to_csv("csvdata/datafullnight2_SE_waso" + str(threshold) + ".csv", index=False)
 
 

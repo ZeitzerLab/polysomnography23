@@ -15,4 +15,4 @@ These files had all 0s (all wake) to begin with so I dropped them.
 |     if i not in fileids:
 |         print(i)
 
-This code showed that 204015 was not in the fileids. I am **removing** this from the original csv.
+This code showed that 204015 was not in the fileids. I am removing this from the original csv.

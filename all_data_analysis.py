@@ -68,6 +68,9 @@ def rf_optimizer(xtrain, ytrain):
     print("CV RESULTS")
     cv_results_df = pd.DataFrame(rf_regressor.cv_results_)
 
+    # sort by rank_test_score descending
+    cv_results_df.sort_values(by=['rank_test_score'], inplace=True, ascending=False)
+
     # Export the DataFrame to a CSV file
     cv_results_df.to_csv('cv_results.csv', index=False)
 

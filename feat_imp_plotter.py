@@ -91,5 +91,5 @@ plt.show()
 wasoimp = [rf_predictor.feature_importances_[d] for d in range(0, len(cols)) if "WASO" in cols[d]][0]
 
 # this will just print the feature importances to a csv file
-# with open("stats.csv", "a") as f:
-#     f.write(str(wasoint) + "," + str(wasoimp) + "," + str(np.corrcoef(ytest, y_pred_rf)[0][1]) + "\n")
+with open("stats.csv", "a") as f:
+    f.write(str(wasoint) + "," + str(wasoimp) + "," + str(np.corrcoef(ytest, y_pred_rf)[0][1]) + "\n")

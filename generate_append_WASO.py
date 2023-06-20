@@ -5,15 +5,22 @@ from pathlib import Path
 from tqdm import tqdm
 import argparse
 
-##COLS TO INCLUDE =======================
-duration = False
-frequency = True
-## ======================================
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--thresholds', nargs='+')
+argparser.add_argument('--duration', action='store_true')
+argparser.add_argument('--frequency', action='store_true')
+argparser.add_argument('--cols2drop', nargs='+')
 args = argparser.parse_args()
 thresholds = args.thresholds
+duration = args.duration
+frequency = args.frequency
+cols2drop = args.cols2drop
+
+print("Generating CSV data with thresholds: " + str(thresholds))
+print("Duration included: " + str(duration))
+print("Frequency included: " + str(frequency))
+print("Columns to drop: " + str(cols2drop))
 
 temp = []
 for i in thresholds:
@@ -59,15 +66,16 @@ original_csv = "csvdata/datafullnight2_SE.csv"
 directory_path = Path("donehypnogram")
 files = os.listdir(directory_path)
 files = sorted(files)
-fileids = [filename.split('.')[0].split('-')[1] for filename in files]
+# fileids = [filename.split('.')[0].split('-')[1] for filename in files]
 
 df = pd.read_csv(original_csv)
+
 ids = [str(i) for i in df["nsrrid"].values]
 
-# show items in ids not in files
-for i in ids:
-    if i not in fileids:
-        print(i)
+# # show items in ids not in files
+# for i in ids:
+#     if i not in fileids:
+#         print(i)
 
 for filename in tqdm(files):
     # print(filename.split('.')[0].split('-')[1])
@@ -77,6 +85,9 @@ for filename in tqdm(files):
             waso, freq = calculate_waso(threshold, file_path)
             wasoresults[i].append(waso)
             freqresults[i].append(freq)
+
+# Dropping the columns
+df = df.drop(cols2drop, axis=1)
 
 allcols = df.copy(deep=True)
 

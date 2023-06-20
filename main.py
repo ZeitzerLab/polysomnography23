@@ -17,7 +17,7 @@ subprocess.run(["python", "generate_append_WASO.py", "--thresholds"] + threshold
 
 threads = str(threads)
 for threshold in thresholds:
-    print("---------  threshold: " + threshold)
-    subprocess.run(["python", "all_data_analysis.py", "--threads", threads, "--wasoint", threshold])
+    # print("---------  threshold: " + threshold)
+    # subprocess.run(["python", "all_data_analysis.py", "--threads", threads, "--wasoint", threshold])
     subprocess.run(["python", "feat_imp_plotter.py", "--wasoint", threshold])
 

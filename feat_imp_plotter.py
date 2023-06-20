@@ -67,6 +67,7 @@ cols = X.columns
 
 # this gets the feature importances and sorts them
 dict = {rf_predictor.feature_importances_[d]: cols[d] for d in range(0, len(cols))}
+print(dict)
 featuredict = OrderedDict(sorted(dict.items()))
 
 # pprint(featuredict)
@@ -83,6 +84,11 @@ plt.text(0, 0.015, "r2:" + str(np.corrcoef(ytest, y_pred_rf)[0][1]))
 plt.tight_layout()
 
 # plt.setp(featuredict.values(), rotation=30, horizontalalignment='right')
-plt.savefig(
-    'featureimpplots/Feature Importances for waso interval ' + str(wasoint) + '.png')
+# plt.savefig(
+#     'featureimpplots/Feature Importances for waso interval ' + str(wasoint) + '.png')
 plt.show()
+
+wasoimp = [rf_predictor.feature_importances_[d] for d in range(0, len(cols)) if "WASO" in cols[d]][0]
+
+with open("stats.csv", "a") as f:
+    f.write(str(wasoint) + "," + str(wasoimp) + "," + str(np.corrcoef(ytest, y_pred_rf)[0][1]) + "\n")

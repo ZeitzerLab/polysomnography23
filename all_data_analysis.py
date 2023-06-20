@@ -16,7 +16,7 @@ import json
 import argparse
 
 # =================================================
-col2drop = ["LTDP10", "REST10", "ESS_s1", "nsrrid"] # these are all the response variables
+col2drop = ["LTDP10", "REST10", "ESS_s1", "nsrrid"] # these are all the response variables + ids :(
 target_column = "LTDP10"
 # =================================================
 
@@ -33,15 +33,15 @@ threads = args.threads
 def rf_optimizer(xtrain, ytrain):
     # Create the random grid
     # Number of trees in random forest
-    n_estimators = [int(x) for x in np.arange(start=50, stop=200, step=50)]
-    n_estimators = [10, 20, 50, 100, 200, 500, 1000]
+    # n_estimators = [int(x) for x in np.arange(start=50, stop=200, step=50)]
+    n_estimators = [200, 300, 500]
     # Number of features to consider at every split
     max_features = [1.0, "sqrt", 0.5]
     # Maximum number of levels in tree
     max_depth = [int(x) for x in np.arange(2, 100, step=10)]
     max_depth.append(None)
     # Minimum number of samples required to split a node
-    min_samples_split = [1, 2, 3, 4, 5, 7, 8]
+    min_samples_split = [2, 3, 4, 5, 7, 8]
     # Minimum number of samples required at each leaf node
     min_samples_leaf = [2, 4, 8, 12]
     # Create the random grid
@@ -87,7 +87,7 @@ if wasointerval == 0:
 
 df = pd.read_csv(filename)
 
-print(df)
+# print(df)
 
 X = df.drop(columns=col2drop)
 y = df.iloc[:, df.columns.get_loc(target_column)].values

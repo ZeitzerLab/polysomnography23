@@ -21,8 +21,12 @@ target_column = "LTDP10"
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--wasoint', type=str)
+argparser.add_argument('--duration', action='store_true')
+argparser.add_argument('--frequency', action='store_true')
 args = argparser.parse_args()
 wasoint = args.wasoint
+duration = args.duration
+frequency = args.frequency
 
 
 
@@ -88,8 +92,16 @@ plt.savefig(
     'featureimpplots/Feature Importances for waso interval ' + str(wasoint) + '.png')
 plt.show()
 
-wasoimp = [rf_predictor.feature_importances_[d] for d in range(0, len(cols)) if "WASO" in cols[d]][0]
-
 # this will just print the feature importances to a csv file
+
+line = str(wasoint)
+
+if duration:
+    wasodurimp = [rf_predictor.feature_importances_[d] for d in range(0, len(cols)) if "WASO_min" in cols[d]][0]
+    line += "," + str(wasodurimp)
+if frequency:
+    wasofreqimp = [rf_predictor.feature_importances_[d] for d in range(0, len(cols)) if "WASO_freq" in cols[d]][0]
+    line += "," + str(wasofreqimp)
+
 with open("stats.csv", "a") as f:
-    f.write(str(wasoint) + "," + str(wasoimp) + "," + str(np.corrcoef(ytest, y_pred_rf)[0][1]) + "\n")
+    f.write(line + "," + str(np.corrcoef(ytest, y_pred_rf)[0][1]) + "\n")

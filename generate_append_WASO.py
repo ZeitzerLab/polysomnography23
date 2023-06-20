@@ -96,28 +96,23 @@ print("Generating csv with all cols")
 # this makes a new csv with all thresholds
 for i, threshold in enumerate(thresholds):
     if duration:
-        newwasoname = "WASO_" + str(threshold) + "min"
+        newwasoname = "WASO_min" + str(threshold)
         allcols[newwasoname] = wasoresults[i]
     if frequency:
-        newfreqname = "WASO_" + str(threshold) + "freq"
+        newfreqname = "WASO_freq" + str(threshold)
         allcols[newfreqname] = freqresults[i]
 
 allcols.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thresholds]) + ".csv", index=False)
-
-
-# drop col 29 as this is the original WASO column
-df = df.drop(df.columns[29], axis=1)
-
 
 # this makes a new csv for each threshold
 for i, threshold in enumerate(thresholds):
     print("Generating csv for threshold: " + str(threshold))
     clone = df.copy(deep=True)
     if duration:
-        newcolname = "WASO_" + str(threshold) + "min"
+        newcolname = "WASO_min" + str(threshold)
         clone[newcolname] = wasoresults[i]
     if frequency:
-        newfreqname = "WASO_" + str(threshold) + "freq"
+        newfreqname = "WASO_freq" + str(threshold)
         clone[newfreqname] = freqresults[i]
     clone.to_csv("csvdata/datafullnight2_SE_waso" + str(threshold) + ".csv", index=False)
 

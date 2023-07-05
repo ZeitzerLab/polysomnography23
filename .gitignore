@@ -4,3 +4,4 @@ hypnogramFiles/*
 donehypnogram/*
 hypnogramFiles.zip
 wandb/*
+.DS_Store

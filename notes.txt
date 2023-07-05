@@ -3,8 +3,15 @@
  donehypnogram/shhs1-203065.hypnogram.txt
  donehypnogram/shhs1-202310.hypnogram.txt
 
+200230
+202180
+202310
+203065
+
 These files had all 0s (all wake) to begin with so I dropped them.
 
+
+   
 | fileids = [filename.split('.')[0].split('-')[1] for filename in files]
 | 
 | df = pd.read_csv(original_csv)

@@ -89,6 +89,15 @@ for filename in tqdm(files):
 # Dropping the columns
 df = df.drop(cols2drop, axis=1)
 
+# # TODO: make the sleep to wake column average over total sleep time
+# # TODO: Install numpy / pandas bc you deleted the env
+
+# # sum of ["N1 (min)", "N2 (min)", "N3 (min)", "REM (min)"] is sleep duration
+
+# # add a sleep duration column
+
+# durationcol = [
+
 allcols = df.copy(deep=True)
 
 print("Generating csv with all cols")

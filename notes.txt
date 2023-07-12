@@ -9,9 +9,14 @@
 203065
 
 These files had all 0s (all wake) to begin with so I dropped them.
+Removed them from the unzipped data, and dropped them in the code.
 
 
-   
+This code showed that 204015 was not in the fileids. I am removing this from the original csv.
+
+TOTAL 5 DELETIONS
+
+
 | fileids = [filename.split('.')[0].split('-')[1] for filename in files]
 | 
 | df = pd.read_csv(original_csv)
@@ -21,5 +26,3 @@ These files had all 0s (all wake) to begin with so I dropped them.
 | for i in ids:
 |     if i not in fileids:
 |         print(i)
-
-This code showed that 204015 was not in the fileids. I am removing this from the original csv.

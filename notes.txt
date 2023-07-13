@@ -13,8 +13,7 @@ Removed them from the unzipped data, and dropped them in the code.
 
 
 This code showed that 204015 was not in the fileids. I am removing this from the original csv.
-
-TOTAL 5 DELETIONS
+Also showed that 200230, 202180, 202310, 203065 were not in the ids. I am removing these from the files directory.
 
 
 | fileids = [filename.split('.')[0].split('-')[1] for filename in files]
@@ -26,3 +25,8 @@ TOTAL 5 DELETIONS
 | for i in ids:
 |     if i not in fileids:
 |         print(i)
+
+# show items in files not in ids
+| for i in fileids:
+|     if i not in ids:
+|         print("not in ids: " + i)

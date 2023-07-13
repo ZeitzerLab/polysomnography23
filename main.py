@@ -28,14 +28,14 @@ if frequency:
     statcols.append("frequency")
 subprocess.run(csvgencommand)
 
-with open("stats.csv", "a") as f:
-    statcols.append("r^2")
-    line = ",".join(statcols)
-    f.write(line + "\n")
+# with open("stats.csv", "a") as f:
+#     statcols.append("r^2")
+#     line = ",".join(statcols)
+#     f.write(line + "\n")
 
-threads = str(threads)
-for threshold in thresholds:
-    print("---------  threshold: " + threshold)
-    subprocess.run(["python", "all_data_analysis.py", "--threads", threads, "--wasoint", threshold])
-    subprocess.run(featimpstatcommand + ["--wasoint", threshold])
+# threads = str(threads)
+# for threshold in thresholds:
+#     print("---------  threshold: " + threshold)
+#     subprocess.run(["python", "all_data_analysis.py", "--threads", threads, "--wasoint", threshold])
+#     subprocess.run(featimpstatcommand + ["--wasoint", threshold])
 

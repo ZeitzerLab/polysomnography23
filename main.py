@@ -5,7 +5,7 @@ thresholds = [.25, 0.5, 0.75, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 threads = 128
 duration = True
 frequency = True
-cols2drop = ["S?W shifts", "WASO (min)"]
+cols2drop = ["WASO (min)"]
 # ==========================================================
 
 

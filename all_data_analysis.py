@@ -17,7 +17,6 @@ import argparse
 
 # =================================================
 col2drop = ["LTDP10", "REST10", "ESS_s1", "nsrrid"] # these are all the response variables + ids :(
-target_column = "LTDP10"
 # =================================================
 
 # import wandb
@@ -26,9 +25,11 @@ target_column = "LTDP10"
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--wasoint', default=2)
 argparser.add_argument('--threads', type=int, default=32)
+argparser.add_argument("--targetcol", default="REST10")
 args = argparser.parse_args()
 wasointerval = args.wasoint
 threads = args.threads
+targetcol = args.targetcol
 
 def rf_optimizer(xtrain, ytrain):
     # Create the random grid
@@ -90,7 +91,7 @@ df = pd.read_csv(filename)
 # print(df)
 
 X = df.drop(columns=col2drop)
-y = df.iloc[:, df.columns.get_loc(target_column)].values
+y = df.iloc[:, df.columns.get_loc(targetcol)].values
 
 xtr, xtest, ytr, ytest = train_test_split(X.values, y, test_size=0.25, random_state=0)
 

@@ -27,3 +27,6 @@ Also showed that 200230, 202180, 202310, 203065 were not in the ids. I am removi
 |         print("not in ids: " + i)
 
 shhs 999999 is a test file to make sure calculations are correct.
+
+Our timeinbed calculation is not entirely accurate, because we drop zeros from the hypnogram files.
+It is a rough estimation of the start of sleep to the end of sleep.

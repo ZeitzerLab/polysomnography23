@@ -94,7 +94,7 @@ line = str(wasoint)
 
 wasodurimp = [rf_predictor.feature_importances_[d] for d in range(0, len(cols)) if "WASO_min" in cols[d]][0]
 line += "," + str(wasodurimp)
-wasofreqimp = [rf_predictor.feature_importances_[d] for d in range(0, len(cols)) if "WASO_freq" in cols[d]][0]
+wasofreqimp = [rf_predictor.feature_importances_[d] for d in range(0, len(cols)) if "StoWfreq" in cols[d]][0]
 line += "," + str(wasofreqimp)
 
 with open("stats.csv", "a") as f:

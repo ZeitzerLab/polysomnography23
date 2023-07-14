@@ -94,7 +94,6 @@ def calculate_waso_and_duration_thresholded(threshold_minutes, filepath):
                 wakedurationinminutes = (15 * current_wake_window_length) / 60
                 current_wake_window_length = 0
 
-                # DO NOT THRESHOLD WASO HERE
                 wakeduration += wakedurationinminutes
             
         else:

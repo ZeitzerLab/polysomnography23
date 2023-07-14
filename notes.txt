@@ -1,12 +1,7 @@
- donehypnogram/shhs1-200230.hypnogram.txt
- donehypnogram/shhs1-202180.hypnogram.txt
- donehypnogram/shhs1-203065.hypnogram.txt
- donehypnogram/shhs1-202310.hypnogram.txt
-
-200230
-202180
-202310
-203065
+donehypnogram/shhs1-200230.hypnogram.txt
+donehypnogram/shhs1-202180.hypnogram.txt
+donehypnogram/shhs1-203065.hypnogram.txt
+donehypnogram/shhs1-202310.hypnogram.txt
 
 These files had all 0s (all wake) to begin with so I dropped them.
 Removed them from the unzipped data, and dropped them in the code.
@@ -30,3 +25,5 @@ Also showed that 200230, 202180, 202310, 203065 were not in the ids. I am removi
 | for i in fileids:
 |     if i not in ids:
 |         print("not in ids: " + i)
+
+shhs 999999 is a test file to make sure calculations are correct.

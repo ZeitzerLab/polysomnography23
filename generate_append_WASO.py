@@ -32,31 +32,91 @@ for i in thresholds:
 thresholds = temp
 print(thresholds)
 
-def calculate_waso_and_duration(threshold_minutes, filepath):
-    with open(filepath, 'r') as file:
+def remove_leading_zeros(filename):
+    with open(filename, 'r') as file:
         lines = file.readlines()
 
-    current_nonzero_window_length = 0
-    waso = 0
-    count = 0
-    sleepduration = 0
+    modified_lines = []
+    leading_zeros_removed = False
+    consecutive_ones_count = 0
 
     for line in lines:
         digit = int(line.strip())
 
-        if digit == 0:
-            current_nonzero_window_length += 1
+        if not leading_zeros_removed:
+            if digit != 0 and digit != 1:
+                leading_zeros_removed = True
+                consecutive_ones_count = 0
+                modified_lines.append(str(digit))
+            elif digit == 0:
+                consecutive_ones_count = 0
+            elif digit == 1:
+                if consecutive_ones_count == 5:
+                    leading_zeros_removed = True
+                    # add 6 ones to the modified lines
+                    modified_lines.extend(['1'] * 6)
+                    continue
+                consecutive_ones_count += 1
         else:
-            sleepduration += .25
-            if current_nonzero_window_length > 0:
-                wake_time_min = (15 * current_nonzero_window_length) / 60
-                current_nonzero_window_length = 0
+            modified_lines.append(str(digit))
 
-                if wake_time_min > threshold_minutes:
-                    waso += wake_time_min
-                    count += 1
-    return waso, count, sleepduration
+    try:    
+        # remove trailing zeros from modified lines
+        while modified_lines[-1] == '0':
+            modified_lines.pop()
+    except IndexError:
+        print(filename)
 
+    with open(filename, 'w') as file:
+        file.write('\n'.join(modified_lines))
+
+def calculate_waso_and_duration_thresholded(threshold_minutes, filepath):
+    print("Calculating WASO and duration for " + filepath)
+    print("Threshold: " + str(threshold_minutes))
+    with open(filepath, 'r') as file:
+        lines = file.readlines()
+
+    current_sleep_window_length = 0
+    current_wake_window_length = 0
+    sleepduration = 0
+    wakeduration = 0
+    calculated_sleeptowake_frequency = 0
+
+    for line in lines:
+        digit = int(line.strip())
+
+        if digit != 0:
+            # sleep
+            current_sleep_window_length += 1
+
+            # if wake window is greater than 0, then we have a wake window to add
+            if current_wake_window_length > 0:
+                wakedurationinminutes = (15 * current_wake_window_length) / 60
+                current_wake_window_length = 0
+
+                # DO NOT THRESHOLD WASO HERE
+                wakeduration += wakedurationinminutes
+            
+        else:
+            # wake
+            current_wake_window_length += 1
+
+            # if sleep window is greater than 0, then we have a sleep window to add
+            if current_sleep_window_length > 0:
+                sleeptimeinminutes = (15 * current_sleep_window_length) / 60
+                current_sleep_window_length = 0
+                
+                sleepduration += sleeptimeinminutes
+                if sleeptimeinminutes >= threshold_minutes:
+                    calculated_sleeptowake_frequency += 1
+    print("wake duration: " + str(wakeduration))
+    print("sleep duration: " + str(sleepduration))
+    print("sleep to wake frequency: " + str(calculated_sleeptowake_frequency))
+    return wakeduration, calculated_sleeptowake_frequency, sleepduration
+
+# # for testing
+# calculate_waso_and_duration_thresholded(0.25, "donehypnogram/shhs1-999999.hypnogram.txt")
+# exit()
 
 wasoresults = []
 freqresults = []
@@ -71,13 +131,7 @@ directory_path = Path("donehypnogram")
 files = os.listdir(directory_path)
 files = sorted(files)
 
-# not in ids: 200033
-# not in ids: 201671
-# not in ids: 202310
-# not in ids: 202708
-# not in ids: 203135
-
-# drop files not in ids
+# drop files not in ids (see notes.txt)
 files.remove("shhs1-200033.hypnogram.txt")
 files.remove("shhs1-201671.hypnogram.txt")
 files.remove("shhs1-202310.hypnogram.txt")
@@ -96,47 +150,40 @@ df = df[df["nsrrid"] != 203065]
 
 ids = [str(i) for i in df["nsrrid"].values]
 
-# # show items in ids not in files
+# show items in ids not in files
 
-#ids is generated from the original csv
-#fileids is generated from the files in the directory
+# ids is generated from the original csv
+# fileids is generated from the files in the directory
 for i in fileids:
     if i not in ids:
-        print("not in ids: " + i)
-
-print(len(ids))
-print(len(fileids))
-    
+        print("not in ids: " + i)    
 
 for filename in tqdm(files):
     # print(filename.split('.')[0].split('-')[1])
     if filename.split('.')[0].split('-')[1] in ids:
+
         file_path = os.path.join(directory_path, filename)
-        sleepdur = 0
+        # remove leading zeros
+        remove_leading_zeros(file_path)
         for i, threshold in enumerate(thresholds):
-            waso, freq, sleepdur = calculate_waso_and_duration(threshold, file_path)
+            waso, freq, sleepdur = calculate_waso_and_duration_thresholded(threshold, file_path)
             wasoresults[i].append(waso)
             freqresults[i].append(freq)
+        if "999999" in filename:
+            print("waso: " + str(waso))
+            print("freq: " + str(freq))
+            print("sleepdur: " + str(sleepdur))
         sleepdurations.append(sleepdur)
+
+for i in zip(files, sleepdurations):
+    print(i)
+
+# # add columns to df
+df["sleepdur"] = sleepdurations
 
 # Dropping the columns
 df = df.drop(cols2drop, axis=1)
 
-# # TODO: make the sleep to wake column average over total sleep time
-
-# # sum of ["N1 (min)", "N2 (min)", "N3 (min)", "REM (min)"] is sleep duration
-
-# # add a sleep duration column 
-
-# add to original DF because this value is not thresholded
-import pprint
-for i in zip(files, sleepdurations):
-    pprint.pprint(i)
-
-# print last 5 of files and ids lists
-print(files[-5:])
-print(ids[-5:])
-exit()
 allcols = df.copy(deep=True)
 
 print("Generating csv with all cols")
@@ -149,6 +196,8 @@ for i, threshold in enumerate(thresholds):
     if frequency:
         newfreqname = "WASO_freq" + str(threshold)
         allcols[newfreqname] = freqresults[i]
+        newsleepdurcolumn = "S?W/sleepdur_" + str(threshold)
+        allcols[newsleepdurcolumn] = allcols[newfreqname] / allcols["sleepdur"]
 
 allcols.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thresholds]) + ".csv", index=False)
 
@@ -162,6 +211,8 @@ for i, threshold in enumerate(thresholds):
     if frequency:
         newfreqname = "WASO_freq" + str(threshold)
         clone[newfreqname] = freqresults[i]
+        newsleepdurcolumn = "S?W/sleepdur_" + str(threshold)
+        clone[newsleepdurcolumn] = clone[newfreqname] / (clone["sleepdur"] + clone["sleepdur"])
     clone.to_csv("csvdata/datafullnight2_SE_waso" + str(threshold) + ".csv", index=False)
 
 

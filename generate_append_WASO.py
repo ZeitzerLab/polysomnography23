@@ -7,18 +7,18 @@ import argparse
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--thresholds', nargs='+')
-argparser.add_argument('--duration', action='store_true')
-argparser.add_argument('--frequency', action='store_true')
+argparser.add_argument('--duration_threshold', action='store_true')
+argparser.add_argument('--frequency_threshold', action='store_true')
 argparser.add_argument('--cols2drop', nargs='+')
 args = argparser.parse_args()
 thresholds = args.thresholds
-duration = args.duration
-frequency = args.frequency
+isDurationThresholded = args.duration_threshold
+isFreqThresholded = args.frequency_threshold
 cols2drop = args.cols2drop
 
 print("Generating CSV data with thresholds: " + str(thresholds))
-print("Duration included: " + str(duration))
-print("Frequency included: " + str(frequency))
+print("Duration included: " + str(isDurationThresholded))
+print("Frequency included: " + str(isFreqThresholded))
 print("Columns to drop: " + str(cols2drop))
 
 
@@ -70,8 +70,8 @@ def remove_leading_zeros(filename):
     with open(filename, 'w') as file:
         file.write('\n'.join(modified_lines))
 
-def calculate_waso_and_duration_thresholded(threshold_minutes, filepath):
-    print("Calculating WASO and duration for " + filepath)
+def calculate_waso_and_timeinbed_thresholded(threshold_minutes, filepath):
+    print("Calculating WASO and timeinbed for " + filepath)
     print("Threshold: " + str(threshold_minutes))
     with open(filepath, 'r') as file:
         lines = file.readlines()
@@ -80,6 +80,7 @@ def calculate_waso_and_duration_thresholded(threshold_minutes, filepath):
     current_wake_window_length = 0
     sleepduration = 0
     wakeduration = 0
+    timeinbed = 0
     calculated_sleeptowake_frequency = 0
 
     for line in lines:
@@ -89,29 +90,41 @@ def calculate_waso_and_duration_thresholded(threshold_minutes, filepath):
             # sleep
             current_sleep_window_length += 1
 
-            # if wake window is greater than 0, then we have a wake window to add
+            # if previous wake window is greater than 0, then we have a wake window to add
             if current_wake_window_length > 0:
                 wakedurationinminutes = (15 * current_wake_window_length) / 60
+                timeinbed += wakedurationinminutes
                 current_wake_window_length = 0
 
-                wakeduration += wakedurationinminutes
+                # check if we need to threshold WASO
+                if isDurationThresholded:
+                    if wakedurationinminutes >= threshold_minutes:
+                        wakeduration += wakedurationinminutes
+                else:
+                    wakeduration += wakedurationinminutes
             
         else:
             # wake
             current_wake_window_length += 1
 
-            # if sleep window is greater than 0, then we have a sleep window to add
+            # if previous sleep window is greater than 0, then we have a sleep window to add
             if current_sleep_window_length > 0:
                 sleeptimeinminutes = (15 * current_sleep_window_length) / 60
+                timeinbed += sleeptimeinminutes
                 current_sleep_window_length = 0
                 
                 sleepduration += sleeptimeinminutes
-                if sleeptimeinminutes >= threshold_minutes:
+                
+                # check if we need to threshold sleep to wake frequency
+                if isFreqThresholded:
+                    if sleeptimeinminutes >= threshold_minutes:
+                        calculated_sleeptowake_frequency += 1
+                else:
                     calculated_sleeptowake_frequency += 1
-    print("wake duration: " + str(wakeduration))
-    print("sleep duration: " + str(sleepduration))
+    print("WASO duration thresholded: " + str(wakeduration))
+    print("total time in bed: " + str(sleepduration))
     print("sleep to wake frequency: " + str(calculated_sleeptowake_frequency))
-    return wakeduration, calculated_sleeptowake_frequency, sleepduration
+    return wakeduration, calculated_sleeptowake_frequency, timeinbed
 
 # # for testing
 # calculate_waso_and_duration_thresholded(0.25, "donehypnogram/shhs1-999999.hypnogram.txt")
@@ -119,7 +132,7 @@ def calculate_waso_and_duration_thresholded(threshold_minutes, filepath):
 
 wasoresults = []
 freqresults = []
-sleepdurations = []
+tot_timeinbeds = []
 
 for threshold in thresholds:
     wasoresults.append([])
@@ -165,20 +178,16 @@ for filename in tqdm(files):
         # remove leading zeros
         remove_leading_zeros(file_path)
         for i, threshold in enumerate(thresholds):
-            waso, freq, sleepdur = calculate_waso_and_duration_thresholded(threshold, file_path)
+            waso, freq, timeinbed = calculate_waso_and_timeinbed_thresholded(threshold, file_path)
             wasoresults[i].append(waso)
             freqresults[i].append(freq)
-        if "999999" in filename:
-            print("waso: " + str(waso))
-            print("freq: " + str(freq))
-            print("sleepdur: " + str(sleepdur))
-        sleepdurations.append(sleepdur)
+        tot_timeinbeds.append(timeinbed)
 
-for i in zip(files, sleepdurations):
+for i in zip(files, tot_timeinbeds):
     print(i)
 
 # # add columns to df
-df["sleepdur"] = sleepdurations
+df["TIMEINBED_mins"] = tot_timeinbeds
 
 # Dropping the columns
 df = df.drop(cols2drop, axis=1)
@@ -189,14 +198,23 @@ print("Generating csv with all cols")
 
 # this makes a new csv with all thresholds
 for i, threshold in enumerate(thresholds):
-    if duration:
+    if isDurationThresholded:
         newwasoname = "WASO_min" + str(threshold)
-        allcols[newwasoname] = wasoresults[i]
-    if frequency:
-        newfreqname = "WASO_freq" + str(threshold)
-        allcols[newfreqname] = freqresults[i]
+    else:
+        newwasoname = "WASO_min0.25original"
+
+    allcols[newwasoname] = wasoresults[i]
+
+    if isFreqThresholded:
+        newfreqname = "StoWfreq" + str(threshold)
         newsleepdurcolumn = "S?W/sleepdur_" + str(threshold)
-        allcols[newsleepdurcolumn] = allcols[newfreqname] / allcols["sleepdur"]
+    else:
+        newfreqname = "StoWfreq0.25original"
+        newsleepdurcolumn = "S?W/sleepdur_0.25original"
+    
+    allcols[newfreqname] = freqresults[i]
+    # we need to divide sw freq by sleep duration in HOURS to get avg freq per hour
+    allcols[newsleepdurcolumn] = allcols[newfreqname] / (allcols["TIMEINBED_mins"] / 60)
 
 allcols.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thresholds]) + ".csv", index=False)
 
@@ -204,14 +222,21 @@ allcols.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thre
 for i, threshold in enumerate(thresholds):
     print("Generating csv for threshold: " + str(threshold))
     clone = df.copy(deep=True)
-    if duration:
+
+    if isDurationThresholded:
         newcolname = "WASO_min" + str(threshold)
-        clone[newcolname] = wasoresults[i]
-    if frequency:
-        newfreqname = "WASO_freq" + str(threshold)
-        clone[newfreqname] = freqresults[i]
-        newsleepdurcolumn = "S?W/sleepdur_" + str(threshold)
-        clone[newsleepdurcolumn] = clone[newfreqname] / (clone["sleepdur"] + clone["sleepdur"])
+    else:
+        newcolname = "WASO_min0.25original"
+    clone[newcolname] = wasoresults[i]
+
+    if isFreqThresholded:
+        newfreqname = "StoWfreq" + str(threshold)
+    else:
+        newfreqname = "StoWfreq0.25original"
+    clone[newfreqname] = freqresults[i]
+    newsleepdurcolumn = "S?W/sleepdur_" + str(threshold)
+    clone[newsleepdurcolumn] = clone[newfreqname] / (clone["sleepdur"] + clone["sleepdur"])
+
     clone.to_csv("csvdata/datafullnight2_SE_waso" + str(threshold) + ".csv", index=False)
 
 

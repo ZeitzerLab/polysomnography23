@@ -71,8 +71,10 @@ def remove_leading_zeros(filename):
         file.write('\n'.join(modified_lines))
 
 def calculate_waso_and_timeinbed_thresholded(threshold_minutes, filepath):
-    print("Calculating WASO and timeinbed for " + filepath)
-    print("Threshold: " + str(threshold_minutes))
+    if threshold_minutes == 10:
+        pass
+    # print("Calculating WASO and timeinbed for " + filepath)
+    # print("Threshold: " + str(threshold_minutes))
     with open(filepath, 'r') as file:
         lines = file.readlines()
 
@@ -102,6 +104,15 @@ def calculate_waso_and_timeinbed_thresholded(threshold_minutes, filepath):
                         wakeduration += wakedurationinminutes
                 else:
                     wakeduration += wakedurationinminutes
+
+                # check if we need to threshold sleep to wake frequency
+                if isFreqThresholded:
+                    if wakedurationinminutes >= threshold_minutes:
+                        calculated_sleeptowake_frequency += 1
+                else:
+                    calculated_sleeptowake_frequency += 1
+
+                
             
         else:
             # wake
@@ -114,13 +125,7 @@ def calculate_waso_and_timeinbed_thresholded(threshold_minutes, filepath):
                 current_sleep_window_length = 0
                 
                 sleepduration += sleeptimeinminutes
-                
-                # check if we need to threshold sleep to wake frequency
-                if isFreqThresholded:
-                    if sleeptimeinminutes >= threshold_minutes:
-                        calculated_sleeptowake_frequency += 1
-                else:
-                    calculated_sleeptowake_frequency += 1
+
     # print("WASO duration thresholded: " + str(wakeduration))
     # print("total time in bed: " + str(sleepduration))
     # print("sleep to wake frequency: " + str(calculated_sleeptowake_frequency))
@@ -157,12 +162,11 @@ fileids = [filename.split('.')[0].split('-')[1] for filename in files]
 df = pd.read_csv(original_csv)
 
 # DROP BAD ROWS (see notes.txt)
-df = df[df["nsrrid"] != 200230]
-df = df[df["nsrrid"] != 202180]
-df = df[df["nsrrid"] != 202310]
-df = df[df["nsrrid"] != 203065]
-df = df[df["nsrrid"] != 201593]
-
+badRows = [200230, 202180, 202310, 203065, 201593]
+for i in badRows:
+    if i in df['nsrrid'].values:
+        # If it exists, filter the rows
+        df = df[df['nsrrid'] != i]
 
 ids = [str(i) for i in df["nsrrid"].values]
 

@@ -1,7 +1,7 @@
 import subprocess
 
-dur = [True, False]
-freq = [True, False]
+dur = [True]
+freq = [True]
 target = ["REST10", "LTDP10"]
 
 for d in dur:
@@ -9,7 +9,13 @@ for d in dur:
         for t in target:
             if d and f:
                 subprocess.run(["python", "main.py", "--isDurationThresholded", "--isFrequencyThresholded", "--target", t])
-            elif d:
+                exit()
+            if d:
                 subprocess.run(["python", "main.py", "--isDurationThresholded", "--target", t])
-            elif f:
+                continue
+            if f:
                 subprocess.run(["python", "main.py", "--isFrequencyThresholded", "--target", t])
+                continue
+            
+            print("==================================================================================================")
+            print("==================================================================================================")

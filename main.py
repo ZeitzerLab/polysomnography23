@@ -36,6 +36,8 @@ if isDurationThresholded:
     csvgencommand.append("--duration_threshold")
 if isFrequencyThresholded:
     csvgencommand.append("--frequency_threshold")
+
+print(csvgencommand)
 subprocess.run(csvgencommand)
 
 statcols.append("WASO")

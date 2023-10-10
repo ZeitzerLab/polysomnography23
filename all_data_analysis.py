@@ -16,7 +16,7 @@ import json
 import argparse
 
 # =================================================
-col2drop = ["LTDP10", "REST10", "ESS_s1", "nsrrid"] # these are all the response variables + ids :(
+col2drop = ["LTDP10", "REST10", "ESS_s1", "nsrrid", "TIMEINBED_mins"] # these are all the response variables + ids :(
 # =================================================
 
 # import wandb
@@ -25,7 +25,7 @@ col2drop = ["LTDP10", "REST10", "ESS_s1", "nsrrid"] # these are all the response
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--wasoint', default=2)
 argparser.add_argument('--threads', type=int, default=32)
-argparser.add_argument("--targetcol", default="REST10")
+argparser.add_argument("--targetcol", type=str)
 args = argparser.parse_args()
 wasointerval = args.wasoint
 threads = args.threads
@@ -77,8 +77,6 @@ def rf_optimizer(xtrain, ytrain):
 
     # wandb.sklearn.plot_learning_curve(rf_regressor.best_estimator_, xtrain, ytrain)
     return rf_regressor.best_params_
-
-finalarray = ["second interval", "rf_params", "lasso_params", "rf_r^2", "lasso_r^2", "WASO (min)"]
 
 # Importing the dataset
 # create the filename

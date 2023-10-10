@@ -15,29 +15,36 @@ import json
 import argparse
 
 # =================================================
-col2drop = ["LTDP10", "REST10", "ESS_s1", "nsrrid"]
-target_column = "LTDP10"
+col2drop = ["LTDP10", "REST10", "ESS_s1", "nsrrid", "TIMEINBED_mins"]
 # =================================================
 
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--wasoint', type=str)
+argparser.add_argument('--filename', type=str)
+argparser.add_argument('--target_column', type=str)
 args = argparser.parse_args()
 wasoint = args.wasoint
+statfilename = args.filename
+target_column = args.target_column
 
 
 
-finalarray = ["second interval", "rf_params", "lasso_params", "rf_r^2", "lasso_r^2", "WASO (min)"]
 
 # Importing the dataset
 filename = "csvdata/datafullnight2_SE_waso" + str(wasoint) + ".csv"
 if wasoint == "0":
     filename = "csvdata/datafullnight2_SE.csv"
+
+print("Generating statistics for: " + filename)
 df = pd.read_csv(filename)
 
-# print(df)
+print(df.columns)
 
 X = df.drop(columns=col2drop)
 y = df.iloc[:, df.columns.get_loc(target_column)].values
+
+print(np.argwhere(np.isnan(X)))
+print(np.argwhere(np.isnan(y)))
 
 xtr, xtest, ytr, ytest = train_test_split(X.values, y, test_size=0.25, random_state=0)
 
@@ -84,9 +91,11 @@ plt.text(0, 0.015, "r2:" + str(np.corrcoef(ytest, y_pred_rf)[0][1]))
 plt.tight_layout()
 
 # plt.setp(featuredict.values(), rotation=30, horizontalalignment='right')
-plt.savefig(
-    'featureimpplots/Feature Importances for waso interval ' + str(wasoint) + '.png')
-plt.show()
+
+pltname = "featureimpplots/" + "featimp_" + statfilename.split(".")[0] + "_" + str(wasoint) + '.png'
+
+plt.savefig(pltname)
+# plt.show()
 
 # this will just print the feature importances to a csv file
 
@@ -97,5 +106,5 @@ line += "," + str(wasodurimp)
 wasofreqimp = [rf_predictor.feature_importances_[d] for d in range(0, len(cols)) if "StoWfreq" in cols[d]][0]
 line += "," + str(wasofreqimp)
 
-with open("stats.csv", "a") as f:
+with open(statfilename, "a") as f:
     f.write(line + "," + str(np.corrcoef(ytest, y_pred_rf)[0][1]) + "\n")

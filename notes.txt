@@ -10,6 +10,8 @@ Removed them from the unzipped data, and dropped them in the code.
 This code showed that 204015 was not in the fileids. I am removing this from the original csv.
 Also showed that 200230, 202180, 202310, 203065 were not in the ids. I am removing these from the files directory.
 
+201593 becomes a single 3 after zero removal, deleting file and row.
+
 
 | fileids = [filename.split('.')[0].split('-')[1] for filename in files]
 | 
@@ -27,6 +29,8 @@ Also showed that 200230, 202180, 202310, 203065 were not in the ids. I am removi
 |         print("not in ids: " + i)
 
 shhs 999999 is a test file to make sure calculations are correct.
+
+999999,1.038318912,1,1,1,0,1,0,3,4,2,2,50.34061001,59.27355033,53,4,2,25.37448347,2,93,0,0,7.571428571,0,0,26.25,260.25,3.75,90.25,98.75,2,0.9826,10.25,21,0.999,0.00116,0.000197,5.44E-06,5.79E-05,77.73237998
 
 Our timeinbed calculation is not entirely accurate, because we drop zeros from the hypnogram files.
 It is a rough estimation of the start of sleep to the end of sleep.

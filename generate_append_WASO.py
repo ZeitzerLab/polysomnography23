@@ -71,8 +71,8 @@ def remove_leading_zeros(filename):
         file.write('\n'.join(modified_lines))
 
 def calculate_waso_and_timeinbed_thresholded(threshold_minutes, filepath):
-    print("Calculating WASO and timeinbed for " + filepath)
-    print("Threshold: " + str(threshold_minutes))
+    # print("Calculating WASO and timeinbed for " + filepath)
+    # print("Threshold: " + str(threshold_minutes))
     with open(filepath, 'r') as file:
         lines = file.readlines()
 
@@ -121,9 +121,9 @@ def calculate_waso_and_timeinbed_thresholded(threshold_minutes, filepath):
                         calculated_sleeptowake_frequency += 1
                 else:
                     calculated_sleeptowake_frequency += 1
-    print("WASO duration thresholded: " + str(wakeduration))
-    print("total time in bed: " + str(sleepduration))
-    print("sleep to wake frequency: " + str(calculated_sleeptowake_frequency))
+    # print("WASO duration thresholded: " + str(wakeduration))
+    # print("total time in bed: " + str(sleepduration))
+    # print("sleep to wake frequency: " + str(calculated_sleeptowake_frequency))
     return wakeduration, calculated_sleeptowake_frequency, timeinbed
 
 # # for testing
@@ -149,6 +149,8 @@ files.remove("shhs1-201671.hypnogram.txt")
 files.remove("shhs1-202310.hypnogram.txt")
 files.remove("shhs1-202708.hypnogram.txt")
 files.remove("shhs1-203135.hypnogram.txt")
+files.remove("shhs1-201593.hypnogram.txt")
+
 
 fileids = [filename.split('.')[0].split('-')[1] for filename in files]
 
@@ -159,6 +161,8 @@ df = df[df["nsrrid"] != 200230]
 df = df[df["nsrrid"] != 202180]
 df = df[df["nsrrid"] != 202310]
 df = df[df["nsrrid"] != 203065]
+df = df[df["nsrrid"] != 201593]
+
 
 ids = [str(i) for i in df["nsrrid"].values]
 
@@ -183,8 +187,8 @@ for filename in tqdm(files):
             freqresults[i].append(freq)
         tot_timeinbeds.append(timeinbed)
 
-for i in zip(files, tot_timeinbeds):
-    print(i)
+# for i in zip(files, tot_timeinbeds):
+#     print(i)
 
 # # add columns to df
 df["TIMEINBED_mins"] = tot_timeinbeds
@@ -207,14 +211,14 @@ for i, threshold in enumerate(thresholds):
 
     if isFreqThresholded:
         newfreqname = "StoWfreq" + str(threshold)
-        newsleepdurcolumn = "S?W/sleepdur_" + str(threshold)
+        newSWshiftcolumn = "S?W/timeinbed_" + str(threshold)
     else:
         newfreqname = "StoWfreq0.25original"
-        newsleepdurcolumn = "S?W/sleepdur_0.25original"
+        newSWshiftcolumn = "S?W/timeinbed_0.25original"
     
     allcols[newfreqname] = freqresults[i]
     # we need to divide sw freq by sleep duration in HOURS to get avg freq per hour
-    allcols[newsleepdurcolumn] = allcols[newfreqname] / (allcols["TIMEINBED_mins"] / 60)
+    allcols[newSWshiftcolumn] = allcols[newfreqname] / (allcols["TIMEINBED_mins"] / 60)
 
 allcols.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thresholds]) + ".csv", index=False)
 
@@ -234,8 +238,10 @@ for i, threshold in enumerate(thresholds):
     else:
         newfreqname = "StoWfreq0.25original"
     clone[newfreqname] = freqresults[i]
-    newsleepdurcolumn = "S?W/sleepdur_" + str(threshold)
-    clone[newsleepdurcolumn] = clone[newfreqname] / (clone["sleepdur"] + clone["sleepdur"])
+    newSWshiftcolumn = "S?W/timeinbed_" + str(threshold)
+
+    # we need to divide sw freq by sleep duration in HOURS to get avg freq per hour
+    clone[newSWshiftcolumn] = clone[newfreqname] / (clone["TIMEINBED_mins"] / 60)
 
     clone.to_csv("csvdata/datafullnight2_SE_waso" + str(threshold) + ".csv", index=False)
 

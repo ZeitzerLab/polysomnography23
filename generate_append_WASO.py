@@ -224,7 +224,7 @@ for i, threshold in enumerate(thresholds):
     # we need to divide sw freq by sleep duration in HOURS to get avg freq per hour
     allcols[newSWshiftcolumn] = allcols[newfreqname] / (allcols["TIMEINBED_mins"] / 60)
 
-# allcols.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thresholds]) + ".csv", index=False)
+allcols.to_csv("csvdata/datafullnight2_SE_waso" + "_".join([str(i) for i in thresholds]) + ".csv", index=False)
 
 # this makes a new csv for each threshold
 for i, threshold in enumerate(thresholds):
@@ -247,6 +247,6 @@ for i, threshold in enumerate(thresholds):
     # we need to divide sw freq by sleep duration in HOURS to get avg freq per hour
     clone[newSWshiftcolumn] = clone[newfreqname] / (clone["TIMEINBED_mins"] / 60)
 
-    # clone.to_csv("csvdata/datafullnight2_SE_waso" + str(threshold) + ".csv", index=False)
+    clone.to_csv("csvdata/datafullnight2_SE_waso" + str(threshold) + ".csv", index=False)
 
 

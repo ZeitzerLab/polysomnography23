@@ -9,7 +9,7 @@ columns_to_keep = ["nsrrid"]
 # Iterate through the columns and select the desired columns
 for col in df.columns:
     print(col)
-    if col.startswith("WASO_min") or col.startswith("StoWfreq"):
+    if col.startswith("WASO_min") or col.startswith("StoWfreq") or col.startswith("S?W"):
         columns_to_keep.append(col)
 
 # Create a new DataFrame with the selected columns

@@ -13,12 +13,14 @@ import argparse
 argparser = argparse.ArgumentParser()
 argparser.add_argument('--isDurationThresholded', action='store_true')
 argparser.add_argument('--isFrequencyThresholded', action='store_true')
+argparser.add_argument('--rf', action="store_true")
 argparser.add_argument('--target', type=str)
 
 args = argparser.parse_args()
 
 isDurationThresholded = args.isDurationThresholded
 isFrequencyThresholded = args.isFrequencyThresholded
+doRFAnalysis = args.rf
 target = args.target
 
 print("Generating CSV Data")
@@ -47,14 +49,15 @@ if isFrequencyThresholded:
 
 statfilename += "_" + target + ".csv"
 
-with open(statfilename, "a") as f:
-    statcols.append("r^2")
-    line = ",".join(statcols)
-    f.write(line + "\n")
+# with open(statfilename, "a") as f:
+#     statcols.append("r^2")
+#     line = ",".join(statcols)
+#     f.write(line + "\n")
 
-threads = str(threads)
-for threshold in thresholds:
-    print("---------  threshold: " + threshold)
-    subprocess.run(["python", "all_data_analysis.py", "--threads", threads, "--wasoint", threshold, "--targetcol", target])
-    subprocess.run(featimpstatcommand + ["--wasoint", threshold, "--filename", statfilename, "--target_column", target])
+if doRFAnalysis:
+    threads = str(threads)
+    for threshold in thresholds:
+        print("---------  threshold: " + threshold)
+        subprocess.run(["python", "all_data_analysis.py", "--threads", threads, "--wasoint", threshold, "--targetcol", target])
+        subprocess.run(featimpstatcommand + ["--wasoint", threshold, "--filename", statfilename, "--target_column", target])
 
